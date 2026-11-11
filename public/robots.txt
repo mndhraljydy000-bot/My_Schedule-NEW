@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://my-schedule-black.vercel.app/sitemap.xml

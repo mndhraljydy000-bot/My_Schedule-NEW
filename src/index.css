@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-ink-950 text-ink-100 font-sans antialiased;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-ink-700 bg-ink-850/80 backdrop-blur-sm shadow-soft;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-ink-600 bg-ink-800/60 px-4 py-3 text-sm text-white outline-none transition-all placeholder:text-ink-500 focus:border-gold-400/50 focus:bg-ink-800/80;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-gold-300 to-gold-500 px-6 py-3 text-sm font-bold text-ink-950 shadow-glow-gold transition-all hover:from-gold-200 hover:to-gold-400 hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-gold:disabled {
+    @apply from-ink-600 to-ink-700 text-ink-400 shadow-none cursor-not-allowed hover:from-ink-600 hover:to-ink-700 hover:translate-y-0;
+  }
+  .btn-sky {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-sky-400 to-sky-600 px-6 py-3 text-sm font-bold text-white shadow-glow-sky transition-all hover:from-sky-300 hover:to-sky-500 hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-ink-600 bg-ink-800/50 px-5 py-3 text-sm font-bold text-ink-200 transition-all hover:border-ink-500 hover:bg-ink-800/80 hover:text-white;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-5 py-3 text-sm font-bold text-red-400 transition-all hover:bg-red-500/20;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-bold;
+  }
+  .section-title {
+    @apply font-display font-extrabold tracking-tight;
+  }
+}

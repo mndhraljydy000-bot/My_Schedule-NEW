@@ -1,0 +1,13 @@
+{
+  "projectId": "69051741",
+  "functions": {
+    "telegram-verify": {
+      "hasChanged": false,
+      "hash": "4a541490fad3cd91fc746e8100b2d4837b1b1dee864229fc2a8047f3520a73d1"
+    },
+    "telegram-webhook": {
+      "hasChanged": false,
+      "hash": "e5ce3f77b70b42c609f6e35046d302ea08a427d2406931cb2ff0ce50f8feb1ca"
+    }
+  }
+}
