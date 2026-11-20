@@ -111,6 +111,7 @@ type PersistedState = {
 };
 
 function loadLocalState(): PersistedState {
+  if (typeof window === 'undefined') return {};
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return {};
@@ -148,7 +149,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [cloudSyncing, setCloudSyncing] = useState(false);
   const [generateError, setGenerateError] = useState<string | null>(null);
-  const [telegramVerified, setTelegramVerified] = useState<boolean>(() => localStorage.getItem('tg_verified') === 'true');
+  const [telegramVerified, setTelegramVerified] = useState<boolean>(() => typeof window !== 'undefined' && localStorage.getItem('tg_verified') === 'true');
   const [telegramGateOpen, setTelegramGateOpen] = useState(false);
   const [telegramGateMode, setTelegramGateMode] = useState<'generate' | 'rejoin'>('generate');
   const [pendingGenerate, setPendingGenerate] = useState<TestType | null>(null);

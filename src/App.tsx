@@ -17,6 +17,8 @@ import InstallPrompt from './components/InstallPrompt';
 import { applyPageSeo } from './utils/seo';
 import { Loader2 } from 'lucide-react';
 
+const IS_SSR = typeof window === 'undefined';
+
 function AppContent() {
   const { page, telegramGateOpen, telegramGateMode, setTelegramGate, handleTelegramVerified, generateError, setGenerateError } = useApp();
 
@@ -36,14 +38,18 @@ function AppContent() {
         {page === 'notes' && <Notes />}
       </main>
       <Footer />
-      <TelegramGate
-        open={telegramGateOpen}
-        mode={telegramGateMode}
-        onVerified={handleTelegramVerified}
-        onClose={() => setTelegramGate(false)}
-      />
-      <Toast open={!!generateError} onClose={() => setGenerateError(null)} message={generateError ?? ''} />
-      <InstallPrompt />
+      {!IS_SSR && (
+        <>
+          <TelegramGate
+            open={telegramGateOpen}
+            mode={telegramGateMode}
+            onVerified={handleTelegramVerified}
+            onClose={() => setTelegramGate(false)}
+          />
+          <Toast open={!!generateError} onClose={() => setGenerateError(null)} message={generateError ?? ''} />
+          <InstallPrompt />
+        </>
+      )}
     </div>
   );
 }
