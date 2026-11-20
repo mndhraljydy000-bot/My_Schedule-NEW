@@ -155,20 +155,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [telegramGateMode, setTelegramGateMode] = useState<'generate' | 'rejoin'>('generate');
   const [pendingGenerate, setPendingGenerate] = useState<TestType | null>(null);
   const [notes, setNotes] = useState('');
+  // False until the localStorage restore below finishes; persistence effects
+  // must not run before that or they would overwrite saved data with defaults
+  const [isRestored, setIsRestored] = useState(false);
 
   // Restore persisted local state after the first render
   useEffect(() => {
-    const saved = loadLocalState();
-    if (saved.selectedSources !== undefined) setSelectedSources(saved.selectedSources);
-    if (saved.inputs !== undefined) setInputs(saved.inputs);
-    if (saved.schedule !== undefined) setSchedule(saved.schedule);
-    if (saved.scheduleConfirmed !== undefined) setScheduleConfirmed(saved.scheduleConfirmed);
-    if (saved.streak !== undefined) setStreak(saved.streak);
-    if (saved.scheduleConfig !== undefined) setScheduleConfigState(saved.scheduleConfig);
-    if (saved.reviewConfig !== undefined) setReviewConfigState(saved.reviewConfig);
-    if (saved.tahsiliSubjectOrder !== undefined) setTahsiliSubjectOrderState(saved.tahsiliSubjectOrder);
-    if (saved.notes !== undefined) setNotes(saved.notes);
-    setTelegramVerified(localStorage.getItem('tg_verified') === 'true');
+    try {
+      const saved = loadLocalState();
+      if (saved.selectedSources !== undefined) setSelectedSources(saved.selectedSources);
+      if (saved.inputs !== undefined) setInputs(saved.inputs);
+      if (saved.schedule !== undefined) setSchedule(saved.schedule);
+      if (saved.scheduleConfirmed !== undefined) setScheduleConfirmed(saved.scheduleConfirmed);
+      if (saved.streak !== undefined) setStreak(saved.streak);
+      if (saved.scheduleConfig !== undefined) setScheduleConfigState(saved.scheduleConfig);
+      if (saved.reviewConfig !== undefined) setReviewConfigState(saved.reviewConfig);
+      if (saved.tahsiliSubjectOrder !== undefined) setTahsiliSubjectOrderState(saved.tahsiliSubjectOrder);
+      if (saved.notes !== undefined) setNotes(saved.notes);
+      setTelegramVerified(localStorage.getItem('tg_verified') === 'true');
+    } catch { /* keep defaults on any localStorage failure */ }
+    finally { setIsRestored(true); }
   }, []);
 
   const setTelegramGate = (open: boolean, mode: 'generate' | 'rejoin' = 'generate') => {
@@ -210,15 +216,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     scheduleConfig, reviewConfig, tahsiliSubjectOrder, notes,
   }), [selectedSources, inputs, schedule, scheduleConfirmed, streak, scheduleConfig, reviewConfig, tahsiliSubjectOrder, notes]);
 
-  // Sync to localStorage always
+  // Sync to localStorage, but only after the initial restore has completed
   useEffect(() => {
+    if (!isRestored) return;
     const data = getStateSnapshot();
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch { /* noop */ }
-  }, [getStateSnapshot]);
+  }, [getStateSnapshot, isRestored]);
 
-  // Sync to Supabase when user is signed in (debounced)
+  // Sync to Supabase when user is signed in (debounced); wait for the local
+  // restore and any cloud load so defaults are never uploaded over real data
   useEffect(() => {
-    if (!user) return;
+    if (!user || !isRestored || cloudSyncing) return;
     const timer = setTimeout(async () => {
       const data = getStateSnapshot();
       await supabase.from('user_schedules').upsert(
@@ -227,7 +235,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       );
     }, 1500);
     return () => clearTimeout(timer);
-  }, [user, getStateSnapshot]);
+  }, [user, getStateSnapshot, isRestored, cloudSyncing]);
 
   useEffect(() => {
     if (!scheduleConfirmed || !schedule) return;
