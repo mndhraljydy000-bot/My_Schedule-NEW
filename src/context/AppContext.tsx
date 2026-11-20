@@ -111,7 +111,6 @@ type PersistedState = {
 };
 
 function loadLocalState(): PersistedState {
-  if (typeof window === 'undefined') return {};
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return {};
@@ -135,41 +134,52 @@ const DEFAULT_REVIEW_CONFIG: ReviewConfig = {
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  const saved = useMemo(loadLocalState, []);
 
   const location = useLocation();
   const navigate = useNavigate();
   const page = pathToPage(location.pathname);
   const setPage = (p: Page) => navigate(PAGE_PATHS[p]);
-  const [selectedSources, setSelectedSources] = useState<Source[]>(saved.selectedSources ?? []);
-  const [inputs, setInputs] = useState<Record<string, SourceInput>>(saved.inputs ?? {});
-  const [schedule, setSchedule] = useState<Schedule | null>(saved.schedule ?? null);
-  const [scheduleConfirmed, setScheduleConfirmed] = useState<boolean>(saved.scheduleConfirmed ?? false);
-  const [streak, setStreak] = useState<number>(saved.streak ?? 0);
+  // Start from the same defaults the server rendered; saved localStorage
+  // state is restored in an effect after the first render so hydration
+  // markup matches the pre-rendered HTML exactly
+  const [selectedSources, setSelectedSources] = useState<Source[]>([]);
+  const [inputs, setInputs] = useState<Record<string, SourceInput>>({});
+  const [schedule, setSchedule] = useState<Schedule | null>(null);
+  const [scheduleConfirmed, setScheduleConfirmed] = useState(false);
+  const [streak, setStreak] = useState(0);
   const [showDeleteWarning, setShowDeleteWarning] = useState(false);
   const [cloudSyncing, setCloudSyncing] = useState(false);
   const [generateError, setGenerateError] = useState<string | null>(null);
-  const [telegramVerified, setTelegramVerified] = useState<boolean>(() => typeof window !== 'undefined' && localStorage.getItem('tg_verified') === 'true');
+  const [telegramVerified, setTelegramVerified] = useState(false);
   const [telegramGateOpen, setTelegramGateOpen] = useState(false);
   const [telegramGateMode, setTelegramGateMode] = useState<'generate' | 'rejoin'>('generate');
   const [pendingGenerate, setPendingGenerate] = useState<TestType | null>(null);
-  const [notes, setNotes] = useState<string>(saved.notes ?? '');
+  const [notes, setNotes] = useState('');
+
+  // Restore persisted local state after the first render
+  useEffect(() => {
+    const saved = loadLocalState();
+    if (saved.selectedSources !== undefined) setSelectedSources(saved.selectedSources);
+    if (saved.inputs !== undefined) setInputs(saved.inputs);
+    if (saved.schedule !== undefined) setSchedule(saved.schedule);
+    if (saved.scheduleConfirmed !== undefined) setScheduleConfirmed(saved.scheduleConfirmed);
+    if (saved.streak !== undefined) setStreak(saved.streak);
+    if (saved.scheduleConfig !== undefined) setScheduleConfigState(saved.scheduleConfig);
+    if (saved.reviewConfig !== undefined) setReviewConfigState(saved.reviewConfig);
+    if (saved.tahsiliSubjectOrder !== undefined) setTahsiliSubjectOrderState(saved.tahsiliSubjectOrder);
+    if (saved.notes !== undefined) setNotes(saved.notes);
+    setTelegramVerified(localStorage.getItem('tg_verified') === 'true');
+  }, []);
 
   const setTelegramGate = (open: boolean, mode: 'generate' | 'rejoin' = 'generate') => {
     setTelegramGateOpen(open);
     setTelegramGateMode(mode);
   };
 
-  const [scheduleConfig, setScheduleConfigState] = useState<ScheduleConfig>(
-    saved.scheduleConfig ?? DEFAULT_SCHEDULE_CONFIG
-  );
+  const [scheduleConfig, setScheduleConfigState] = useState<ScheduleConfig>(DEFAULT_SCHEDULE_CONFIG);
 
-  const [reviewConfig, setReviewConfigState] = useState<ReviewConfig>(
-    saved.reviewConfig ?? DEFAULT_REVIEW_CONFIG
-  );
-  const [tahsiliSubjectOrder, setTahsiliSubjectOrderState] = useState<string[]>(
-    saved.tahsiliSubjectOrder ?? []
-  );
+  const [reviewConfig, setReviewConfigState] = useState<ReviewConfig>(DEFAULT_REVIEW_CONFIG);
+  const [tahsiliSubjectOrder, setTahsiliSubjectOrderState] = useState<string[]>([]);
 
   // On login: load cloud state and replace local
   useEffect(() => {

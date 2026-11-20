@@ -15,7 +15,6 @@ import TelegramGate from './components/TelegramGate';
 import Toast from './components/Toast';
 import InstallPrompt from './components/InstallPrompt';
 import { applyPageSeo } from './utils/seo';
-import { Loader2 } from 'lucide-react';
 
 const IS_SSR = typeof window === 'undefined';
 
@@ -62,19 +61,6 @@ function LoginRoute() {
 }
 
 function AppRoutes() {
-  const { loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-ink-950">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-10 w-10 animate-spin text-gold-400" />
-          <p className="text-sm text-ink-300">جاري التحميل…</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <AppProvider>
       <Routes>
