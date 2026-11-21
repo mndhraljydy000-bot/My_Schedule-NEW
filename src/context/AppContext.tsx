@@ -238,7 +238,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [user, getStateSnapshot, isRestored, cloudSyncing]);
 
   useEffect(() => {
-    if (!scheduleConfirmed || !schedule) return;
+    if (!isRestored || !scheduleConfirmed || !schedule) return;
     const today = todayISO();
     const allDoneToday = schedule.days.find((d) => d.date === today)?.done;
     if (allDoneToday) {
@@ -248,7 +248,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('study-planner-last-streak-day', today);
       }
     }
-  }, [scheduleConfirmed, schedule]);
+  }, [isRestored, scheduleConfirmed, schedule]);
 
   const toggleSource = (id: string, name: string, testType: TestType, groupId: string) => {
     setSelectedSources((prev) => {
