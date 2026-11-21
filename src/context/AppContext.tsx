@@ -578,6 +578,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const confirmDay = (dayIndex: number) => {
+    if (!isRestored) return;
     setSchedule((prev) => {
       if (!prev) return prev;
       return {
