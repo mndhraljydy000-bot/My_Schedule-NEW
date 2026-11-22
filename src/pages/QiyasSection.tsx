@@ -41,7 +41,7 @@ export default function QiyasSection() {
   return (
     <div className="animate-fade-in px-4 py-8 sm:px-6">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 text-center"><h1 className="section-title text-3xl text-white sm:text-4xl">قسم القدرات</h1><p className="mt-2 text-sm text-ink-300">اختر مصدراً واحداً من كل قسم — التأسيس، التدريب الكمي، والتدريب اللفظي</p></div>
+        <div className="mb-8 text-center"><h1 className="section-title text-3xl text-white sm:text-4xl">قسم القدرات</h1><p className="mt-2 text-sm text-ink-300">جداول قدرات مجانية بخطة تتابعية: ابدأ بقسم التأسيس لتثبيت القواعد، ثم أضف التدريب الكمي (المنصف، المفكر) أو التدريب اللفظي (دورة إيهاب عبد العظيم). اختر مصدراً واحداً من كل قسم، وأدخل عدد فيديوهاتك واختباراتك، ليتولى الموقع توزيعها على تقويم فعلي حتى يوم الاختبار.</p></div>
         {testTypeSources.length > 0 && (
           <div className="mb-6 animate-pop"><div className="card p-4">
             <div className="mb-3 flex items-center justify-between"><div className="flex items-center gap-2"><Layers className="h-4 w-4 text-gold-300" /><span className="text-sm font-bold text-white">المصادر المحددة ({testTypeSources.length})</span></div>
