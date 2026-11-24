@@ -15,7 +15,7 @@ import {
   Coffee, Lock, AlertCircle, Flame, CheckCheck, Clock, Check, RefreshCw,
   CalendarClock, Plane, X, NotebookPen, ArrowRight,
 } from 'lucide-react';
-import { todayISO, addDaysISO, formatArabicDateShort } from '../utils/scheduler';
+import { todayISO, addDaysISO } from '../utils/scheduler';
 
 const TASK_ICONS = { video: PlayCircle, test: FileText, review: RefreshCw } as const;
 const TASK_COLORS = { video: 'text-sky-400', test: 'text-gold-300', review: 'text-emerald-400' } as const;
