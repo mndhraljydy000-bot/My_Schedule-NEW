@@ -42,7 +42,7 @@ export default function ScheduleConfigForm({ showSubjectOrder = false }: { showS
     }
   };
 
-    const tahsiliSubjects = selectedSources.filter((s) => s.testType === 'tahsili');
+      const tahsiliSubjects = selectedSources.filter((s) => s.testType === 'tahsili');
   const orderedSubjects = tahsiliSubjectOrder.length > 0
     ? tahsiliSubjectOrder
         .map(id => tahsiliSubjects.find(s => s.id === id))
