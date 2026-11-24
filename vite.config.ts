@@ -1,3 +1,4 @@
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -40,7 +41,7 @@ export default defineConfig({
           },
         ],
       },
-            workbox: {
+      workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
         runtimeCaching: [
           {
@@ -60,8 +61,6 @@ export default defineConfig({
               cacheableResponse: { statuses: [0, 200] },
             },
           },
-        ],
-      },
         ],
       },
       devOptions: {
