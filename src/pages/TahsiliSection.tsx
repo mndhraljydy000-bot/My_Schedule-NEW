@@ -11,7 +11,7 @@ const SUBJECT_COLORS: Record<TahsiliSubject, string> = { math: 'text-sky-400', p
 const SUBJECT_BG: Record<TahsiliSubject, string> = { math: 'from-sky-400/10 to-sky-600/5', physics: 'from-gold-300/10 to-gold-500/5', chemistry: 'from-sky-400/10 to-sky-600/5', biology: 'from-gold-300/10 to-gold-500/5' };
 
 export default function TahsiliSection() {
-  const { selectedSources, toggleSource, addSource, isSourceSelected, removeSource, inputs, setInput, requestGenerate, generateSchedule, setPage, telegramVerified } = useApp();
+  const { selectedSources, addSource, isSourceSelected, removeSource, inputs, setInput, requestGenerate, generateSchedule, setPage, telegramVerified } = useApp();
   const [showSources, setShowSources] = useState(false);
   const [genError, setGenError] = useState<string | null>(null);
   const [expandedSource, setExpandedSource] = useState<string | null>(null);
