@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Loader2, AlertCircle, Users, ExternalLink, Send, RefreshCw, CheckCircle2, HelpCircle } from 'lucide-react';
+import { Loader2, AlertCircle, Users, ExternalLink, Send, RefreshCw, CheckCircle2 } from 'lucide-react';
 
 interface TelegramGateProps {
   open: boolean;
