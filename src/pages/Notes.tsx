@@ -3,12 +3,28 @@ import { useApp } from '../context/AppContext';
 import { NotebookPen, Trash2, Save, Check } from 'lucide-react';
 
 export default function Notes() {
-  const { notes, setNotes } = useApp();
+  const { notes, setNotes, cloudSyncing } = useApp(); 
   const [draft, setDraft] = useState(notes);
   const [saved, setSaved] = useState(false);
 
   useEffect(() => { setDraft(notes); }, [notes]);
+useEffect(() => {
+  if (cloudSyncing || draft === notes) return;
 
+  const timer = window.setTimeout(() => {
+    setNotes(draft);
+    setSaved(true);
+  }, 700);
+
+  return () => window.clearTimeout(timer);
+}, [draft, notes, cloudSyncing, setNotes]);
+
+useEffect(() => {
+  if (!saved) return;
+
+  const timer = window.setTimeout(() => setSaved(false), 1800);
+  return () => window.clearTimeout(timer);
+}, [saved]);
   const handleSave = () => {
     setNotes(draft);
     setSaved(true);
@@ -43,6 +59,12 @@ export default function Notes() {
           </div>
 
           <textarea
+            onBlur={() => {
+  if (draft !== notes && !cloudSyncing) {
+    setNotes(draft);
+    setSaved(true);
+  }
+}}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             placeholder="اكتب هنا أي شيء تريد تذكره: أفكار، مهام، تواريخ مهمة، ملخصات دراسية..."
