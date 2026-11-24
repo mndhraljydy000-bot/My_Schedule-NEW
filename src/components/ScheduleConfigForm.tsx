@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { CalendarDays, Clock, Coffee, RefreshCw, Calendar, Layers, Hash, AlertCircle, X, ArrowUp, ArrowDown, ListOrdered } from 'lucide-react';
-import { ARABIC_DAYS_SHORT, TAHSILI_SUBJECTS } from '../data/sources';
+import { ARABIC_DAYS_SHORT } from '../data/sources';
 import type { ReviewMode } from '../data/sources';
 import { todayISO } from '../utils/scheduler';
 
@@ -42,10 +42,13 @@ export default function ScheduleConfigForm({ showSubjectOrder = false }: { showS
     }
   };
 
-  const tahsiliSubjects = selectedSources.filter((s) => s.testType === 'tahsili');
+    const tahsiliSubjects = selectedSources.filter((s) => s.testType === 'tahsili');
   const orderedSubjects = tahsiliSubjectOrder.length > 0
-    ? tahsiliSubjectOrder.map(id => tahsiliSubjects.find(s => s.id === id)).filter(Boolean)
+    ? tahsiliSubjectOrder
+        .map(id => tahsiliSubjects.find(s => s.id === id))
+        .filter((s): s is (typeof tahsiliSubjects)[number] => s !== undefined)
     : tahsiliSubjects;
+    
   const moveSubject = (index: number, dir: -1 | 1) => {
     const newIndex = index + dir;
     if (newIndex < 0 || newIndex >= orderedSubjects.length) return;
