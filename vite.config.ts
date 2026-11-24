@@ -44,7 +44,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.origin === 'https://fonts.googleapis.com',
+            urlPattern: ({ url }) => url.href.startsWith('https://fonts.googleapis.com/'), 
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-stylesheets',
@@ -52,7 +52,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: ({ url }) => url.origin === 'https://fonts.gstatic.com',
+            urlPattern: ({ url }) => url.href.startsWith('https://fonts.gstatic.com/'), 
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-webfonts',
