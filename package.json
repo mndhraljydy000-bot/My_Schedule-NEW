@@ -1,12 +1,13 @@
+
 {
   "name": "study-planner",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
     "build": "npm run typecheck && node scripts/sync-seo.mjs && vite build && node scripts/prerender.mjs",
-"typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json"
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.8",
@@ -28,3 +29,4 @@
     "vite-plugin-pwa": "^1.3.0"
   }
 }
+ 
