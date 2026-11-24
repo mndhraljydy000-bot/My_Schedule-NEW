@@ -14,7 +14,8 @@ import AuthPage from './pages/AuthPage';
 import TelegramGate from './components/TelegramGate';
 import Toast from './components/Toast';
 import InstallPrompt from './components/InstallPrompt';
-import { applyPageSeo } from './utils/seo';import { PAGE_PATHS } from './utils/routes';
+import { applyPageSeo } from './utils/seo';
+import { PAGE_PATHS } from './utils/routes'; 
 
 const IS_SSR = typeof window === 'undefined';
 
@@ -22,7 +23,7 @@ function AppContent() {
   const { page, telegramGateOpen, telegramGateMode, setTelegramGate, handleTelegramVerified, generateError, setGenerateError } = useApp();
 
   useEffect(() => {
-ReactGA.send({ hitType: 'pageview', page: PAGE_PATHS[page], title: page });
+    ReactGA.send({ hitType: 'pageview', page: PAGE_PATHS[page], title: page });
     applyPageSeo(page);
   }, [page]);
 
