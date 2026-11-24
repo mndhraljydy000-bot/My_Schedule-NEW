@@ -46,7 +46,7 @@ export default function TahsiliSection() {
   return (
     <div className="animate-fade-in px-4 py-8 sm:px-6">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 text-center"><h1 className="section-title text-3xl text-white sm:text-4xl">قسم التحصيلي</h1><p className="mt-2 text-sm text-ink-300">جداول تحصيلي مجانية توزع مذاكرة المواد الأربع — الرياضيات والفيزياء والكيمياء والأحياء — على تقويم فعلي. اختر مصدراً واحداً (ناصر عبدالكريم، يلو، غشام، إينشتاين)، ثم حدد المواد التي تريد مذاكرته منه، وأدخل عدد الفيديوهات والاختبارات لتنظيم مذاكرة كل مادة بجدول يومي واضح.</p></div>
+        <div className="mb-8 text-center"><h1 className="section-title text-3xl text-white sm:text-4xl">قسم التحصيلي</h1><p className="mt-2 text-sm text-ink-300">اختر مصدراً واحداً، ثم حدد المواد التي تريد مذاكرتها منه</p></div>
         {testTypeSources.length > 0 && (
           <div className="mb-6 animate-pop"><div className="card p-4">
             <div className="mb-3 flex items-center justify-between"><div className="flex items-center gap-2"><Layers className="h-4 w-4 text-gold-300" /><span className="text-sm font-bold text-white">المواد المحددة ({testTypeSources.length})</span></div>
@@ -56,7 +56,7 @@ export default function TahsiliSection() {
         )}
         {!showInputs ? (
           !showSources ? (
-            <div className="text-center"><button onClick={() => setShowSources(true)} className="group flex w-full max-w-md mx-auto items-center justify-between rounded-2xl border border-gold-400/40 bg-gold-400/5 p-6 transition-all hover:border-gold-400/60 hover:bg-gold-400/10"><div className="flex items-center gap-3"><div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-300/10 to-gold-500/5 border border-gold-400/30"><BookMarked className="h-6 w-6 text-gold-300" /></div><div className="text-right"><div className="font-display text-lg font-bold text-white">المصادر</div><div className="text-xs text-ink-300">ناصر عبدالكريم، يلو، غشام، إينشتاين</div></div></div><Plus className="h-6 w-6 text-gold-300 transition-transform group-hover:scale-110" /></button></div>
+            <div className="text-center"><button onClick={() => setShowSources(true)} className="group flex w-full max-w-md mx-auto items-center justify-between rounded-2xl border border-gold-400/40 bg-gold-400/5 p-6 transition-all hover:border-gold-400/60 hover:bg-gold-400/10"><div className="flex items-center gap-3"><div className="grid h-1 w-12 place-items-center rounded-xl bg-gradient-to-br from-gold-300/10 to-gold-500/5 border border-gold-400/30"><BookMarked className="h-6 w-6 text-gold-300" /></div><div className="text-right"><div className="font-display text-lg font-bold text-white">المصادر</div><div className="text-xs text-ink-300">ناصر عبدالكريم، يلو، غشام، إينشتاين</div></div></div><Plus className="h-6 w-6 text-gold-300 transition-transform group-hover:scale-110" /></button></div>
           ) : (
             <>
               <div className="space-y-4">
