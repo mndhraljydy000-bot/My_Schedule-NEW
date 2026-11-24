@@ -40,11 +40,11 @@ export default defineConfig({
           },
         ],
       },
-      workbox: {
+            workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico,woff,woff2}'],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\//, 
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\//,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-stylesheets',
@@ -52,7 +52,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\//, 
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\//,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-webfonts',
@@ -60,8 +60,8 @@ export default defineConfig({
               cacheableResponse: { statuses: [0, 200] },
             },
           },
-          {
-          
+        ],
+      },
         ],
       },
       devOptions: {
