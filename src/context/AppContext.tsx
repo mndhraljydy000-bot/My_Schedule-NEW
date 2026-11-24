@@ -3,8 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import type {
   Page, TestType, Source, SourceInput, Schedule, ScheduleDay, ScheduleTask, ReviewMode,
 } from '../data/sources';
-import { TAHSILI_SUBJECTS } from '../data/sources';
-import type { TahsiliSubject } from '../data/sources';
 import { todayISO, addDaysISO, getDayOfWeek, daysBetween } from '../utils/scheduler';
 import { supabase } from '../lib/supabase';
 import { useAuth } from './AuthContext';
@@ -369,7 +367,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     // Auto-correct stale start date to today
     if (startDate < todayISO()) {
       startDate = todayISO();
-      setScheduleConfig((prev) => ({ ...prev, startDate }));
+      setScheduleConfig({ startDate });
       if (endDate < startDate) {
         return { success: false, error: 'تاريخ النهاية أصبح سابقاً لتاريخ اليوم. اختر تاريخ نهاية مستقبلي.' };
       }
