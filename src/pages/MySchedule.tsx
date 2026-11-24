@@ -32,12 +32,12 @@ function useLiveCountdown(iso: string | null): Countdown {
 }
 
 export default function MySchedule() {
-  const {
+    const {
     schedule, scheduleConfirmed, confirmSchedule, selectedSources,
-    toggleTaskDone, confirmDay, clearSchedule, setPage, generateSchedule,
-    inputs, scheduleConfig, progress, completedDays, streak,
+    toggleTaskDone, confirmDay, clearSchedule, setPage,
+    scheduleConfig, progress, completedDays, streak,
     totalTasks, completedTasks, showDeleteWarning, setShowDeleteWarning, postponeTasks,
-    telegramVerified, setTelegramGate, setTelegramVerified,
+    telegramVerified, setTelegramVerified,
   } = useApp();
 
   const [selectedDayIdx, setSelectedDayIdx] = useState(0);
